@@ -1,5 +1,19 @@
 #include"sort.h"
 /**
+ * wsapi - function
+ *@array1: arr
+ *@array2: size
+ *Return: void
+ */
+void wsapi(int *array1, int *array2)
+{
+	int tmp;
+
+	tmp = *array1;
+	*array1 = *array2;
+	*array2 = tmp;
+}
+/**
  * selection_sort - function
  *@array: arr
  *@size: size
@@ -9,22 +23,24 @@ void selection_sort(int *array, size_t size)
 {
 	size_t i = 0;
 	size_t j = 0;
-	int small = array[0], ind = 0;
+	int samllest = 0, ind = 0;
 
 	for (i = 0; i < size; i++)
 	{
-		for (j = i + 1; j < size; j++)
+		samllest = array[i];
+		ind = -1;
+		for (j = i; j < size; j++)
 		{
-			if (array[j] < small)
+			if (array[j] < samllest)
 			{
-				small = array[j];
+				samllest = array[j];
 				ind = j;
 			}
 		}
-		array[ind] = array[i];
-		array[i] = small;
+		if (ind != -1)
+		{
+		wsapi(&array[i], &array[ind]);
 		print_array(array, size);
-		small = 1000000;
-		ind = 100000;
+		}
 	}
 }
