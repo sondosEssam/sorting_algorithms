@@ -18,23 +18,26 @@ void wsapi(int *array1, int *array2)
  *@array: arr
  *@low: size
  *@high: high
+ *@size: size
  *Return: void
  */
-int partition(int *array, int low, int high)
+int partition(int *array, int low, int high, size_t size)
 {
-	int pivot = array[high];
-	int i = low - 1, j = 0;
+	int pivot_value = array[high];
+	int i = low, j = 0;
 
-	for (j = low; j <= high - 1; j++)
+	for (j = low; j < high; j++)
 	{
-		if (array[j] <= pivot)
+		if (array[j] <= pivot_value)
 		{
-			i++;
 			wsapi(&array[i], &array[j]);
+			i++;
+			print_array(array, size);
 		}
 	}
-	wsapi(&array[i + 1], &array[high]);
-	return (i + 1);
+	wsapi(&array[i], &array[high]);
+	print_array(array, size);
+	return (i);
 }
 
 /**
@@ -45,12 +48,25 @@ int partition(int *array, int low, int high)
  */
 void quick_sort(int *array, size_t size)
 {
-	int pivot_index = 0;
 
-	if (size <= 1)
-		return;
-	pivot_index = partition(array, 0, size - 1);
-	quick_sort(array, pivot_index);
-	quick_sort(array + pivot_index + 1, size - pivot_index - 1);
-	print_array(array, size);
+	quick_sort_recursion(array, 0, size - 1, size);
+
+}
+/**
+ * quick_sort_recursion - function
+ *@array: arr
+ *@low: size
+ *@high: hspda
+ *@size: size
+ *Return: void
+ */
+void quick_sort_recursion(int *array, int low, int high, size_t size)
+{
+	if (low < high)
+	{
+	int pivot_index = partition(array, low, high, size);
+
+	quick_sort_recursion(array, low, pivot_index - 1, size);
+	quick_sort_recursion(array, pivot_index + 1, high, size);
+	}
 }
