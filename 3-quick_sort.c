@@ -32,6 +32,8 @@ int partition(int *array, int low, int high, size_t size)
 		{
 			wsapi(&array[i], &array[j]);
 			i++;
+			if (array[i] - 1 != array[j] && (i - 1) != j)
+				print_array(array, size);
 		}
 	}
 	wsapi(&array[i], &array[high]);
